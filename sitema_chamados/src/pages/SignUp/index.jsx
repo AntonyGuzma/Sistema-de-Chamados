@@ -9,6 +9,16 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
 
+
+  function handleSubmit(e){
+    // evitar que a pag. atualize
+    e.preventDefault()
+
+    if(name != '' && email != '' && password != ''){
+      
+    }
+  }
+
   return (
     <div className='container-center'>
       <div className="login">
@@ -16,7 +26,7 @@ export default function SignUp() {
           <img src={logo} alt="Logo do Sistema de Chamado" />
         </div>
 
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <h1>Cadastrar Nova Conta</h1>
           <input type="text" placeholder='Seu nome' value={name} onChange={e => setName(e.target.value)}/>
           <input type="text" placeholder='email@email.com' value={email} onChange={e => setEmail(e.target.value)}/>
