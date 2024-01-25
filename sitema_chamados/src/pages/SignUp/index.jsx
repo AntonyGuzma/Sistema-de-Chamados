@@ -1,7 +1,8 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Link } from 'react-router-dom';
 import logo from '../../assets/logo.png'
 import { useState } from 'react';
+import { AuthContext } from '../../contexts/auth';
 
 export default function SignUp() {
 
@@ -9,13 +10,14 @@ export default function SignUp() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('')
 
+  const {signUp, loandingAuth} = useContext(AuthContext)
 
-  function handleSubmit(e){
+  async function handleSubmit(e){
     // evitar que a pag. atualize
     e.preventDefault()
 
     if(name != '' && email != '' && password != ''){
-      
+      signUp(email, password, name)
     }
   }
 
@@ -32,7 +34,8 @@ export default function SignUp() {
           <input type="text" placeholder='email@email.com' value={email} onChange={e => setEmail(e.target.value)}/>
           <input type="text" placeholder='**********' value={password} onChange={e => setPassword(e.target.value)}/>
         
-          <button type='submit'>Acessar</button>
+        {/* Condição ternaria */}
+          <button type='submit'>{loandingAuth? 'Carregando':'Cadastrar'}</button>
         </form>
 
         <Link to='/'>Já Possui uma Conta? Faça Login</Link>
