@@ -12,7 +12,7 @@ export default function Signin() {
   const [password, setPassword] = useState('')
 
   //Usando o Contexto Importado
-  const { signIn } = useContext(AuthContext)
+  const { signIn, loandingAuth } = useContext(AuthContext)
 
   function handleSignIn(e){
     // evitar que a pag. atualize
@@ -35,7 +35,7 @@ export default function Signin() {
           <input type="text" placeholder='email@email.com' value={email} onChange={e => setEmail(e.target.value)}/>
           <input type="text" placeholder='**********' value={password} onChange={e => setPassword(e.target.value)}/>
         
-          <button type='submit'>Acessar</button>
+          <button type='submit'>{loandingAuth? 'Carregando':'Acessar'}</button>
         </form>
 
         <Link to='/register'>Criar uma Conta</Link>
