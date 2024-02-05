@@ -14,12 +14,12 @@ export default function Signin() {
   //Usando o Contexto Importado
   const { signIn, loandingAuth } = useContext(AuthContext)
 
-  function handleSignIn(e){
+  async function handleSignIn(e){
     // evitar que a pag. atualize
     e.preventDefault();
 
     if(email != '' && password != ''){
-      signIn(email, password);
+      await signIn(email, password);
     };
   }
 
