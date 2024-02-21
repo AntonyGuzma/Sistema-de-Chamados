@@ -21,7 +21,7 @@ function Header() {
         <FiUser color='#fff' size={24}></FiUser>
         Clientes
       </Link>
-      <Link to={'/dashboard'}>
+      <Link to={'/profile'}>
         <FiSettings color='#fff' size={24}></FiSettings>
         Perfil
       </Link>
