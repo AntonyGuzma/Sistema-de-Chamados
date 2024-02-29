@@ -69,7 +69,7 @@ export default function Profile() {
         </div>
 
         <div className="container">
-            <button className="logout-btn" onClick={() => {logout()}}>Sair</button>
+            <button className="logout-btn" onClick={() => {logout()}}>Saira</button>
         </div>
       </div>
     </div>
