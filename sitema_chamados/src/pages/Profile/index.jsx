@@ -4,7 +4,11 @@ import { FiSettings, FiUpload } from "react-icons/fi";
 import avatar from "../../assets/avatar.png" 
 import { AuthContext } from "../../contexts/auth";
 import { useContext, useState } from "react";
+import {doc , updateDoc} from 'firebase/firestore';
+import { ref , uploadBytes, getDownloadURL } from "firebase/storage";
+import {toast} from 'react-toastify';
 
+import {db , storage} from '../../services/FirebaseConnecton';
 import './profile.css';
 
 export default function Profile() {
@@ -34,6 +38,61 @@ export default function Profile() {
     }
   } 
 
+  const handleUpload = async () =>{
+
+    const currentuid = user.uid;
+    
+    const uploadRef = ref(storage, `images/${currentuid}/${imageAvatar.name}`)
+    const uploadTask = uploadBytes(uploadRef, imageAvatar)
+    .then((snapshot) => {
+      getDownloadURL(snapshot.ref).then(async (downloadURL) => {
+         let urlFoto = downloadURL;
+
+        const docRef = doc(db, "Users", currentuid)
+        await updateDoc(docRef, {
+          avatarUrl: urlFoto,
+          nome: nome,
+        })
+        .then(() => {
+          let data = {...user,
+            nome:nome,
+            avatarUrl: urlFoto,    
+          }
+  
+          setUser(data)
+          storageUser(data)
+          toast.success('Atualizado com Sucesso');
+        })
+      })
+    })
+
+  }
+  
+
+  const handleSubmit = async (e) =>{
+     e.preventDefault();
+     
+     if(imageAvatar === null && nome != ''){
+      //Atualizar apenas o nome
+      const docRef = doc(db, "Users", user.uid)
+      await updateDoc(docRef, {
+          nome: nome
+      }).then(() => {
+        let data = {...user,
+          nome:nome        
+        }
+
+        setUser(data)
+        storageUser(data)
+        toast.success('Atualizado com Sucesso');
+      })
+     }else 
+     if (nome !== '' && imageAvatar !== null){
+      //Atualizar Nome e Foto
+      handleUpload()
+     }
+  }
+
   return (
     <div>
       <Header />
@@ -43,7 +102,7 @@ export default function Profile() {
         </Title>
 
         <div className="container">
-            <form className="form-profile">
+            <form className="form-profile" onSubmit={handleSubmit}>
                 <label className="label-avatar">
                     <span>
                         <FiUpload color="#fff" size={25}/>
@@ -64,12 +123,12 @@ export default function Profile() {
                 <label>Email</label>
                 <input type="text" value={email} disabled={true}/>
 
-                <button type="submit">Salvar</button>
+                <button  type="submit">Salvar</button>
             </form>
         </div>
 
         <div className="container">
-            <button className="logout-btn" onClick={() => {logout()}}>Saira</button>
+            <button className="logout-btn" onClick={() => {logout()}}>Sair</button>
         </div>
       </div>
     </div>

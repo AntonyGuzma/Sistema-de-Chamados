@@ -73,6 +73,7 @@ function AuthProvider({ children }) {
       .then(async (value) => {
         let uid = value.user.uid;
 
+        // users > uid > infousers
         await setDoc(doc(db, "Users", uid), {
           nome: name,
           avatarUrl: null,
