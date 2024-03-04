@@ -14,7 +14,7 @@ export default function Dashboard() {
   return (
     <div>
       <Header></Header>
-      <h1>Página Dash</h1>
+      
       <button onClick={handleLogout}>Sair</button>
     </div>
   )
