@@ -1,4 +1,4 @@
-import {React, useState, useEffect, useContext} from "react";
+import { useState, useEffect, useContext} from "react";
 import Title from "../../components/Title";
 import Header from "../../components/header";
 import { FiPlusCircle } from "react-icons/fi";
@@ -54,7 +54,7 @@ export default function New() {
       }
 
       loadCustomers()
-  }, [])
+  },)
 
   function handleOptionChange(e){
     setStatus(e.target.value)
